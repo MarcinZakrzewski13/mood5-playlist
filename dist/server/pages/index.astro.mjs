@@ -1,47 +1,23 @@
-import { e as createComponent, f as createAstro, m as maybeRenderHead, r as renderTemplate, h as addAttribute, k as renderHead, l as renderSlot, n as renderComponent } from '../chunks/astro/server_Br73842o.mjs';
+import { e as createComponent, f as createAstro } from '../chunks/astro/server_D7ABcXeN.mjs';
 import 'kleur/colors';
 import 'clsx';
-/* empty css                                 */
 export { renderers } from '../renderers.mjs';
 
-const $$Astro$1 = createAstro();
-const $$Welcome = createComponent(($$result, $$props, $$slots) => {
-  const Astro2 = $$result.createAstro($$Astro$1, $$props, $$slots);
-  Astro2.self = $$Welcome;
-  return renderTemplate`${maybeRenderHead()}<div class="relative w-full mx-auto min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 p-4 sm:p-8"> <div class="relative max-w-4xl mx-auto backdrop-blur-xl bg-gradient-to-b from-white/10 to-white/5 rounded-2xl shadow-2xl p-8 text-white border border-white/10"> <div class="space-y-8"> <div class="text-center"> <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 text-transparent bg-clip-text drop-shadow-lg">
-Witaj w 10xDevs Astro Starter!
-</h1> <p class="text-xl text-blue-100/90 drop-shadow-md">
-Ten projekt został zbudowany w oparciu o nowoczesny stack technologiczny:
-</p> </div> <div class="flex flex-col gap-6 max-w-2xl mx-auto"> <div class="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-xl p-6 border border-white/10"> <h2 class="text-2xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
-Core
-</h2> <ul class="space-y-3"> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">Astro v5.5.5</span> <span class="text-blue-100/90">- Metaframework do aplikacji webowych</span> </li> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">React v19</span> <span class="text-blue-100/90">- Biblioteka UI do komponentów interaktywnych</span> </li> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">TypeScript</span> <span class="text-blue-100/90">- Typowanie statyczne</span> </li> </ul> </div> <div class="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-xl p-6 border border-white/10"> <h2 class="text-2xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
-Stylowanie
-</h2> <ul class="space-y-3"> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">Tailwind CSS v4</span> <span class="text-blue-100/90">- Utility-first CSS framework</span> </li> </ul> </div> <div class="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-xl p-6 border border-white/10"> <h2 class="text-2xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
-Statyczna analiza kodu
-</h2> <ul class="space-y-3"> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">ESLint v9</span> <span class="text-blue-100/90">- Lintowanie kodu</span> </li> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">Prettier</span> <span class="text-blue-100/90">- Formatowanie kodu</span> </li> <li class="flex items-center space-x-3"> <span class="font-mono bg-blue-900/50 px-3 py-1.5 rounded-lg text-blue-200 shadow-sm">Husky i Lint-staged</span> <span class="text-blue-100/90">- Automatyczna analiza kodu przed commitowaniem</span> </li> </ul> </div> </div> <p class="text-lg text-center text-blue-100/90 mt-8 leading-relaxed">
-Starter zawiera wszystko, czego potrzebujesz do rozpoczęcia tworzenia <br class="hidden sm:block"> <span class="font-semibold bg-gradient-to-r from-blue-200 to-purple-200 text-transparent bg-clip-text">nowoczesnych aplikacji webowych!</span> </p> </div> </div> </div>`;
-}, "/home/mzak/10x-astro-starter/src/components/Welcome.astro", void 0);
-
 const $$Astro = createAstro();
-const $$Layout = createComponent(($$result, $$props, $$slots) => {
-  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
-  Astro2.self = $$Layout;
-  const { title = "10x Astro Starter" } = Astro2.props;
-  return renderTemplate`<html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/png" href="/favicon.png"><meta name="generator"${addAttribute(Astro2.generator, "content")}><title>${title}</title>${renderHead()}</head> <body data-astro-cid-sckkx6r4> ${renderSlot($$result, $$slots["default"])} </body></html>`;
-}, "/home/mzak/10x-astro-starter/src/layouts/Layout.astro", void 0);
-
 const $$Index = createComponent(($$result, $$props, $$slots) => {
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "Welcome", $$Welcome, {})} ` })}`;
-}, "/home/mzak/10x-astro-starter/src/pages/index.astro", void 0);
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$Index;
+  return Astro2.redirect("/generate");
+}, "/home/mzak/mood5-playlist/src/pages/index.astro", void 0);
 
-const $$file = "/home/mzak/10x-astro-starter/src/pages/index.astro";
+const $$file = "/home/mzak/mood5-playlist/src/pages/index.astro";
 const $$url = "";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: $$Index,
-  file: $$file,
-  url: $$url
+	__proto__: null,
+	default: $$Index,
+	file: $$file,
+	url: $$url
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const page = () => _page;

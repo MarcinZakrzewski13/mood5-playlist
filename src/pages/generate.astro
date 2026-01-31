@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar";
+import GenerateForm from "../components/GenerateForm";
+---
+
+<Layout title="Mood5 – Generate">
+  <div class="min-h-screen bg-gray-950">
+    <NavBar currentPath="/generate" client:load />
+    <main class="max-w-3xl mx-auto px-4 py-8">
+      <h1 class="text-2xl font-bold text-white mb-6">Wygeneruj playlistę</h1>
+      <GenerateForm client:load />
+    </main>
+  </div>
+</Layout>

@@ -1,94 +1,86 @@
-# 10x Astro Starter
+# Mood5 Playlist
 
-A modern, opinionated starter template for building fast, accessible, and AI-friendly web applications.
+Aplikacja webowa generująca 5-utworową playlistę dopasowaną do nastroju i celu użytkownika. Wpisujesz jak się czujesz, a AI dobiera muzykę i wyjaśnia dlaczego.
+
+## Geneza projektu
+
+Projekt powstał w ramach szkolenia **[10xDevs](https://10xdevs.pl/)** jako certyfikacyjne MVP. Bazuje na starterze [10x-astro-starter](https://github.com/przeprogramowani/10x-astro-starter) autorstwa zespołu przeprogramowani.
+
+## AI-assisted development
+
+Kod został wygenerowany z wykorzystaniem narzędzi AI:
+
+- **Claude Code** (CLI) powered by **Claude Opus 4.5** (`claude-opus-4-5-20251101`) - główny agent kodujący, architektura, implementacja, testy, CI
+- **OpenRouter** z modelem **OpenAI GPT-4o-mini** - silnik decyzyjny generujący playlisty (runtime)
+- **ChatGPT 5.2** - konsultacje, planowanie, przygotowanie artefaktów projektowych (PRD, tech-stack, prompty)
 
 ## Tech Stack
 
-- [Astro](https://astro.build/) v5.5.5 - Modern web framework for building fast, content-focused websites
-- [React](https://react.dev/) v19.0.0 - UI library for building interactive components
-- [TypeScript](https://www.typescriptlang.org/) v5 - Type-safe JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) v4.0.17 - Utility-first CSS framework
+- **Framework:** [Astro](https://astro.build/) v5 (SSR, `@astrojs/node`)
+- **UI:** [React](https://react.dev/) v19
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
+- **Auth & DB:** [Supabase](https://supabase.com/) (email+password, Postgres, RLS)
+- **AI:** [OpenRouter](https://openrouter.ai/) (GPT-4o-mini)
+- **Testy:** [Vitest](https://vitest.dev/)
+- **CI:** GitHub Actions
 
-## Prerequisites
+## Funkcjonalności
 
-- Node.js v22.14.0 (as specified in `.nvmrc`)
-- npm (comes with Node.js)
+- Rejestracja i logowanie (email + hasło)
+- Generowanie playlisty na podstawie opisu nastroju/celu
+- AI interpretuje emocje, dobiera energy level, tempo i styl wokalny
+- 5 tracków z linkami do Spotify/YouTube i uzasadnieniem wyboru
+- Historia wygenerowanych playlist
+- Usuwanie playlist (cascade)
+- Kontrola dostępu (middleware, RLS)
 
-## Getting Started
-
-1. Clone the repository:
+## Uruchomienie lokalne
 
 ```bash
-git clone https://github.com/przeprogramowani/10x-astro-starter.git
-cd 10x-astro-starter
-```
-
-2. Install dependencies:
-
-```bash
+# 1. Zainstaluj zależności
 npm install
-```
 
-3. Run the development server:
+# 2. Skopiuj i uzupełnij zmienne środowiskowe
+cp .env.example .env
+# Uzupełnij SUPABASE_URL, SUPABASE_KEY, OPENROUTER_API_KEY
 
-```bash
+# 3. Uruchom migrację w Supabase SQL Editor
+# Plik: supabase/migrations/001_create_tables.sql
+
+# 4. Uruchom serwer deweloperski
 npm run dev
 ```
 
-4. Build for production:
+Aplikacja będzie dostępna na http://localhost:3000
 
-```bash
-npm run build
+## Struktura projektu
+
+```
+src/
+├── components/       # React components (GenerateForm, TrackList, HistoryList, NavBar)
+├── layouts/          # Astro layouts
+├── lib/              # Logika biznesowa (openrouter, validate-playlist, supabase client)
+├── middleware.ts      # Auth middleware (cookie-based, chroni protected routes)
+├── pages/
+│   ├── api/          # Server endpoints (auth/login, auth/register, auth/logout, generate, history)
+│   ├── auth/         # Login page, callback
+│   ├── generate.astro
+│   ├── history.astro
+│   └── index.astro
+├── styles/           # Global CSS
+tests/                # Vitest testy walidacji
+supabase/migrations/  # SQL schema + RLS
+.ai/                  # Artefakty projektowe (PRD, tech-stack, prompty, reguły)
+.github/workflows/    # CI pipeline
 ```
 
-## Available Scripts
+## Skrypty
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
+- `npm run dev` - serwer deweloperski
+- `npm run build` - build produkcyjny
+- `npm test` - testy (Vitest)
+- `npm run lint` - linting (ESLint)
 
-## Project Structure
-
-```md
-.
-├── src/
-│   ├── layouts/    # Astro layouts
-│   ├── pages/      # Astro pages
-│   │   └── api/    # API endpoints
-│   ├── components/ # UI components (Astro & React)
-│   └── assets/     # Static assets
-├── public/         # Public assets
-```
-
-## AI Development Support
-
-This project is configured with AI development tools to enhance the development experience, providing guidelines for:
-
-- Project structure
-- Coding practices
-- Frontend development
-- Styling with Tailwind
-- Accessibility best practices
-- Astro and React guidelines
-
-### Cursor IDE
-
-The project includes AI rules in `.cursor/rules/` directory that help Cursor IDE understand the project structure and provide better code suggestions.
-
-### GitHub Copilot
-
-AI instructions for GitHub Copilot are available in `.github/copilot-instructions.md`
-
-### Windsurf
-
-The `.windsurfrules` file contains AI configuration for Windsurf.
-
-## Contributing
-
-Please follow the AI guidelines and coding practices defined in the AI configuration files when contributing to this project.
-
-## License
+## Licencja
 
 MIT

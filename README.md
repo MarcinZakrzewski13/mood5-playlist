@@ -1,5 +1,55 @@
 # Mood5 Playlist
 
+A web application that generates a 5-track playlist tailored to your current mood and goal. Describe how you feel, and AI picks the music and explains why.
+
+## About
+
+This project was built as a certification MVP during the **[10xDevs](https://10xdevs.pl/)** course. It is based on the [10x-astro-starter](https://github.com/przeprogramowani/10x-astro-starter) template by the przeprogramowani team.
+
+## AI-Assisted Development
+
+The code was generated using AI tools:
+
+- **Claude Code** (CLI) powered by **Claude Opus 4.5** (`claude-opus-4-5-20251101`) — primary coding agent: architecture, implementation, tests, CI
+- **OpenRouter** with **OpenAI GPT-4o-mini** — decision engine generating playlists at runtime
+- **ChatGPT 5.2** — consulting, planning, preparation of project artifacts (PRD, tech-stack, prompts)
+
+## Features
+
+- Registration and login (email + password)
+- Playlist generation based on mood/goal description
+- AI interprets emotions, selects energy level, tempo, and vocal style
+- 5 tracks with Spotify/YouTube links and per-track explanations
+- History of generated playlists
+- Playlist deletion (cascade)
+- Access control (middleware + RLS)
+
+## Tech Stack
+
+- **Framework:** [Astro](https://astro.build/) v5 (SSR, `@astrojs/node`)
+- **UI:** [React](https://react.dev/) v19
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
+- **Auth & DB:** [Supabase](https://supabase.com/) (email+password, Postgres, RLS)
+- **AI:** [OpenRouter](https://openrouter.ai/) (GPT-4o-mini)
+- **Tests:** [Vitest](https://vitest.dev/)
+- **CI:** GitHub Actions
+
+## Quick Start
+
+```bash
+npm install
+cp .env.example .env
+# Fill in SUPABASE_URL, SUPABASE_KEY, OPENROUTER_API_KEY
+# Run supabase/migrations/001_create_tables.sql in Supabase SQL Editor
+npm run dev
+```
+
+App available at http://localhost:3000
+
+---
+
+# Mood5 Playlist (PL)
+
 Aplikacja webowa generująca 5-utworową playlistę dopasowaną do nastroju i celu użytkownika. Wpisujesz jak się czujesz, a AI dobiera muzykę i wyjaśnia dlaczego.
 
 ## Geneza projektu

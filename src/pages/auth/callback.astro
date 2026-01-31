@@ -1,0 +1,33 @@
+---
+// Auth callback page - handles Supabase auth redirects
+// The actual token exchange happens client-side via the Supabase JS SDK
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Authenticating...</title>
+  </head>
+  <body>
+    <p>Authenticating...</p>
+    <script>
+      import { createClient } from "@supabase/supabase-js";
+
+      const supabase = createClient(
+        import.meta.env.PUBLIC_SUPABASE_URL || "",
+        import.meta.env.PUBLIC_SUPABASE_KEY || ""
+      );
+
+      // Exchange the code for a session if present
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get("access_token");
+
+      if (accessToken) {
+        // Token is in the hash, Supabase client will pick it up
+        await supabase.auth.getSession();
+      }
+
+      window.location.href = "/generate";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { createClient } from "@supabase/supabase-js";
+
+// If already logged in, redirect to /generate
+const cookieHeader = Astro.request.headers.get("cookie") ?? "";
+const accessToken = cookieHeader.match(/sb-access-token=([^;]+)/)?.[1];
+
+if (accessToken) {
+  const supabase = createClient(
+    import.meta.env.SUPABASE_URL,
+    import.meta.env.SUPABASE_KEY
+  );
+  const { data: { user } } = await supabase.auth.getUser(accessToken);
+  if (user) {
+    return Astro.redirect("/generate");
+  }
+}
+
+const error = Astro.url.searchParams.get("error");
+---
+
+<Layout title="Mood5 – Login">
+  <div class="min-h-screen flex items-center justify-center bg-gray-950 px-4">
+    <div class="w-full max-w-sm space-y-6">
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-white">Mood5 Playlist</h1>
+        <p class="text-gray-400 mt-2">Zaloguj się, aby generować playlisty</p>
+      </div>
+
+      {error && (
+        <div class="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded">
+          {decodeURIComponent(error)}
+        </div>
+      )}
+
+      <div class="space-y-4">
+        <input
+          id="email"
+          type="email"
+          placeholder="Email"
+          class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+        />
+        <input
+          id="password"
+          type="password"
+          placeholder="Hasło (min. 6 znaków)"
+          class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+        />
+        <button
+          id="btn-login"
+          class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition"
+        >
+          Zaloguj się
+        </button>
+        <button
+          id="btn-register"
+          class="w-full py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold rounded-lg border border-gray-700 transition"
+        >
+          Zarejestruj się
+        </button>
+        <p id="auth-message" class="text-sm text-center text-gray-400 hidden"></p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const emailInput = document.getElementById("email") as HTMLInputElement;
+  const passwordInput = document.getElementById("password") as HTMLInputElement;
+  const btnLogin = document.getElementById("btn-login") as HTMLButtonElement;
+  const btnRegister = document.getElementById("btn-register") as HTMLButtonElement;
+  const message = document.getElementById("auth-message") as HTMLParagraphElement;
+
+  function showMessage(text: string, isError = false) {
+    message.textContent = text;
+    message.className = `text-sm text-center ${isError ? "text-red-400" : "text-green-400"}`;
+    message.classList.remove("hidden");
+  }
+
+  function setLoading(btn: HTMLButtonElement, loading: boolean) {
+    btn.disabled = loading;
+    btn.style.opacity = loading ? "0.5" : "1";
+  }
+
+  async function authRequest(url: string, btn: HTMLButtonElement) {
+    setLoading(btn, true);
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailInput.value,
+          password: passwordInput.value,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showMessage(data.error || "Wystąpił błąd", true);
+      } else if (data.success) {
+        if (url.includes("register") && !data.message?.includes("zalogowano")) {
+          showMessage(data.message || "Sprawdź email");
+        } else {
+          window.location.href = "/generate";
+        }
+      }
+    } catch {
+      showMessage("Błąd połączenia", true);
+    } finally {
+      setLoading(btn, false);
+    }
+  }
+
+  btnLogin.addEventListener("click", () => authRequest("/api/auth/login", btnLogin));
+  btnRegister.addEventListener("click", () => authRequest("/api/auth/register", btnRegister));
+
+  // Enter key submits login
+  passwordInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") btnLogin.click();
+  });
+</script>

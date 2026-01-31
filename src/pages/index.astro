@@ -1,8 +1,4 @@
 ---
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
+// Redirect to /generate (middleware will handle auth check)
+return Astro.redirect("/generate");
 ---
-
-<Layout>
-  <Welcome />
-</Layout>

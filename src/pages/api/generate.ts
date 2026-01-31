@@ -25,10 +25,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   if (userInput.length > 1000) {
-    return new Response(JSON.stringify({ error: "user_input is too long (max 1000 chars)" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "user_input is too long (max 1000 chars)" }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 
   // Call AI
@@ -49,10 +52,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     playlist = validatePlaylistResponse(rawResponse);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Validation failed";
-    console.error("AI raw response:", JSON.stringify(rawResponse, null, 2));
     return new Response(
-      JSON.stringify({ error: `Validation error: ${message}`, raw: rawResponse }),
-      { status: 502, headers: { "Content-Type": "application/json" } }
+      JSON.stringify({
+        error: `Validation error: ${message}`,
+        raw: rawResponse,
+      }),
+      { status: 502, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -71,8 +76,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   if (insertError || !requestRow) {
     return new Response(
-      JSON.stringify({ error: `DB error: ${insertError?.message ?? "Unknown"}` }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      JSON.stringify({
+        error: `DB error: ${insertError?.message ?? "Unknown"}`,
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -87,12 +94,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
     explanation: track.explanation,
   }));
 
-  const { error: tracksError } = await supabase.from("tracks").insert(tracksToInsert);
+  const { error: tracksError } = await supabase
+    .from("tracks")
+    .insert(tracksToInsert);
 
   if (tracksError) {
     return new Response(
-      JSON.stringify({ error: `DB error saving tracks: ${tracksError.message}` }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      JSON.stringify({
+        error: `DB error saving tracks: ${tracksError.message}`,
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -102,6 +113,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       inference: playlist.inference,
       tracks: playlist.tracks,
     }),
-    { status: 200, headers: { "Content-Type": "application/json" } }
+    { status: 200, headers: { "Content-Type": "application/json" } },
   );
 };

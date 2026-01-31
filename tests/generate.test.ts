@@ -95,7 +95,7 @@ describe("validatePlaylistResponse", () => {
       tracks: mockAIResponse.tracks.slice(0, 3),
     };
     expect(() => validatePlaylistResponse(badResponse)).toThrow(
-      "Expected exactly 5 tracks"
+      "Expected exactly 5 tracks",
     );
   });
 
@@ -105,7 +105,7 @@ describe("validatePlaylistResponse", () => {
       inference: { ...mockAIResponse.inference, energy: 7 },
     };
     expect(() => validatePlaylistResponse(badResponse)).toThrow(
-      "Invalid inference.energy"
+      "Invalid inference.energy",
     );
   });
 
@@ -113,11 +113,11 @@ describe("validatePlaylistResponse", () => {
     const badResponse = {
       ...mockAIResponse,
       tracks: mockAIResponse.tracks.map((t, i) =>
-        i === 0 ? { ...t, tempo: "allegro" } : t
+        i === 0 ? { ...t, tempo: "allegro" } : t,
       ),
     };
     expect(() => validatePlaylistResponse(badResponse)).toThrow(
-      'invalid tempo "allegro"'
+      'invalid tempo "allegro"',
     );
   });
 
@@ -137,7 +137,7 @@ describe("validatePlaylistResponse", () => {
 
     // Some tracks have null URLs, which is valid
     const tracksWithNullSpotify = result.tracks.filter(
-      (t) => t.spotify_url === null
+      (t) => t.spotify_url === null,
     );
     expect(tracksWithNullSpotify.length).toBeGreaterThan(0);
   });

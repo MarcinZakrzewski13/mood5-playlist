@@ -1,6 +1,3 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-
 const SYSTEM_PROMPT = `You are Mood5 Playlist, a strict decision engine and music curator.
 You MUST follow the output schema exactly and return valid JSON only.
 No markdown, no extra text, no explanations outside JSON.
@@ -77,30 +74,36 @@ export async function generatePlaylist(input: GenerateInput) {
 
   const userMessage = JSON.stringify({
     user_input: input.user_input,
-    preferred_platforms: input.preferred_platforms ?? ["spotify", "youtube_music"],
+    preferred_platforms: input.preferred_platforms ?? [
+      "spotify",
+      "youtube_music",
+    ],
     language_hint: input.language_hint ?? "pl",
     allow_instrumental: input.allow_instrumental ?? true,
   });
 
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      "HTTP-Referer": "https://mood5-playlist.vercel.app",
-      "X-Title": "Mood5 Playlist",
+  const response = await fetch(
+    "https://openrouter.ai/api/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://mood5-playlist.vercel.app",
+        "X-Title": "Mood5 Playlist",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-4o-mini",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: userMessage },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+        response_format: { type: "json_object" },
+      }),
     },
-    body: JSON.stringify({
-      model: "openai/gpt-4o-mini",
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: userMessage },
-      ],
-      temperature: 0.7,
-      max_tokens: 2000,
-      response_format: { type: "json_object" },
-    }),
-  });
+  );
 
   if (!response.ok) {
     const err = await response.text();

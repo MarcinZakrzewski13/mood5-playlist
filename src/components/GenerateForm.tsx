@@ -1,5 +1,8 @@
 import { useState } from "react";
-import type { PlaylistTrack, PlaylistInference } from "../lib/validate-playlist";
+import type {
+  PlaylistTrack,
+  PlaylistInference,
+} from "../lib/validate-playlist";
 import TrackList from "./TrackList";
 
 interface GenerateResult {

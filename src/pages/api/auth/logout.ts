@@ -9,11 +9,11 @@ export const POST: APIRoute = async () => {
   // Clear auth cookies
   response.headers.append(
     "Set-Cookie",
-    "sb-access-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0"
+    "sb-access-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0",
   );
   response.headers.append(
     "Set-Cookie",
-    "sb-refresh-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0"
+    "sb-refresh-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0",
   );
 
   return response;

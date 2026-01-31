@@ -24,7 +24,7 @@ export const GET: APIRoute = async ({ locals }) => {
         youtube_url,
         explanation
       )
-    `
+    `,
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });

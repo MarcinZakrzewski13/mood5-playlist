@@ -49,8 +49,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
     playlist = validatePlaylistResponse(rawResponse);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Validation failed";
+    console.error("AI raw response:", JSON.stringify(rawResponse, null, 2));
     return new Response(
-      JSON.stringify({ error: `Validation error: ${message}` }),
+      JSON.stringify({ error: `Validation error: ${message}`, raw: rawResponse }),
       { status: 502, headers: { "Content-Type": "application/json" } }
     );
   }

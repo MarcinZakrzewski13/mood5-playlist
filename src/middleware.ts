@@ -43,10 +43,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
     import.meta.env.SUPABASE_KEY
   );
 
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser(accessToken);
+  // Set session so RLS policies work with auth.uid()
+  const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+    access_token: accessToken,
+    refresh_token: refreshToken ?? "",
+  });
+
+  const user = sessionData?.user;
+  const error = sessionError;
 
   if (error || !user) {
     // Try refresh

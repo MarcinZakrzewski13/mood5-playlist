@@ -33,7 +33,34 @@ Decision guidelines:
 Self-check before output:
 - Verify 5 tracks exactly.
 - Verify constraints match inferred energy/goal.
-- Verify JSON validity.`;
+- Verify JSON validity.
+
+REQUIRED OUTPUT SCHEMA (follow exactly):
+{
+  "inference": {
+    "emotion": "string describing detected emotion",
+    "goal": "string describing inferred goal",
+    "energy": 3,
+    "constraints": {
+      "avoid": ["genre or style to avoid"],
+      "prefer": ["genre or style to prefer"]
+    },
+    "vocal_style": "vocal"
+  },
+  "tracks": [
+    {
+      "artist": "Artist Name",
+      "title": "Track Title",
+      "tempo": "medium",
+      "mood_tag": "chill",
+      "spotify_url": "https://open.spotify.com/track/...",
+      "youtube_url": "https://www.youtube.com/watch?v=...",
+      "explanation": "One sentence explaining why this track fits."
+    }
+  ]
+}
+
+The root object MUST have exactly two keys: "inference" and "tracks". Do NOT flatten or omit the inference object.`;
 
 interface GenerateInput {
   user_input: string;
